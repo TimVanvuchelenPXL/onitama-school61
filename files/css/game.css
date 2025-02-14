@@ -1,0 +1,391 @@
+
+.main {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    background: var(--color-background-gradient);
+    display: flex;
+    flex-flow: column;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    max-width: unset;
+}
+#container {
+    width: 100%;
+    height: 60%;
+    position: relative;
+    overflow: hidden;
+    position: relative;
+    max-width: 700px;
+    max-height: 700px;
+}
+.game-controls {
+    background: var(--color-background-gradient);
+    width: 100%;
+    height: 100%;
+    max-width: 700px;
+    max-height: 700px;
+    display: flex;
+    flex-flow: column;
+}
+.game-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.game-button {
+    padding: 3px;
+    padding-left: 12px;
+    padding-right: 12px;
+    background: var(--color-main);
+    color: var(--color-background);
+    border-radius: 2em;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.game-button-hidden, .game-button-clicked {
+    display: none;
+}
+.game-button:hover {
+    filter: brightness(0.5);
+}
+.game-cards {
+    height: calc(100% - 20px);
+    width: calc(100% - 20px);
+    margin-left: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-end;
+    overflow-x: hidden;
+}
+.game-cards-name-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+.game-cards-name {
+    margin-bottom: 5px;
+    width: max-content;
+    display: flex;
+    text-align: center;
+    padding: 2px;
+    padding-left: 12px;
+    padding-right: 12px;
+    border-radius: 0.3em;  
+    text-shadow: 0px 0px 3px black;
+}
+.game-cards-top, .game-cards-bottom, .game-cards-mid {
+    display: flex;
+    justify-content: space-between;
+}
+.game-cards-center {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+.game-cards-top, .game-cards-mid {
+    margin-bottom: 25px;
+}
+.game-card {
+    width: calc(50% - 5px);
+    height: 110px;
+    background: var(--color-background-fade);;
+    border-radius: 0.5em;
+    display: flex;
+    justify-content :Center;
+    align-items: center;  
+    flex-flow: column;
+}
+.player-card {
+    cursor: pointer;
+    transition: 0.2s;
+    pointer-events: none;
+}
+.player-card-pointer {
+    pointer-events: all;
+}
+.player-card:hover {
+    filter: saturate(1.2) brightness(1.3);
+}
+.player-card-selected {
+    filter: saturate(1.2) brightness(1.3);
+}
+.game-card-blocks {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    grid-row-gap: 0px;
+    grid-column-gap: 0px;
+    width: 70px;
+    height: 70px;
+}
+.card-name {
+    font-size: 85%;
+}
+.block {
+    width: 12px;
+    height: 12px;
+    border-style: solid;
+    border-color: #00000073;
+    border-width: 1px;
+    transition: 0.2s;
+}
+.game-cards-time-hidden {
+    display: none;
+}
+canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+.container-loading::after {
+    content: 'Loading...';
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000000bd;
+    justify-content: center;
+    align-items: center;
+    font-size: 150%;
+    font-weight: 500;
+    backdrop-filter: blur(5px);
+    text-align: center;
+}
+.loading {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: translateX(-100%);
+    background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 0, rgba(55, 55, 55, 0.2) 25%, rgba(40, 40, 40, 0.2) 75%, rgba(255, 255, 255, 0));
+    animation: shimmer 2s infinite;
+    animation-timing-function: cubic-bezier;
+    content: '';
+}
+.container-2-1::after {
+    content: '(1/2) - Waiting for other players...';
+}
+.container-2-2::after {
+    content: '(2/2) - The table is full...';
+}
+.container-4-1::after {
+    content: '(1/4) - Waiting for other players...';
+}
+.container-4-2::after {
+    content: '(2/4) - Waiting for other players...';
+}
+.container-4-3::after {
+    content: '(3/4) - Waiting for other players...';
+}
+.container-4-4::after {
+    content: '(4/4) - The table is full...';
+}
+.container-waiting::after {
+    content: 'Almost ready! Waiting for the owner to start the game...';
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #00000095;
+    justify-content: center;
+    align-items: center;
+    font-size: 150%;
+    font-weight: 500;
+    backdrop-filter: blur(5px);
+    text-align: center;
+}
+@keyframes shimmer {
+    100% {
+        transform: translateX(100%);
+    }
+}
+.floating-error {
+    z-index: 3;
+}
+.toast-container {
+    position: fixed;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    z-index: 3;
+    flex-flow: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+.toast {
+    background: #000000ab;
+    text-align: center;
+    border-radius: 2em;
+    height: max-content;
+    width: max-content;
+    padding: 3px;
+    padding-left: 18px;
+    padding-right: 18px;
+    margin-top: 5px;
+}
+.game-over {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    background: #000000a6;
+    opacity: 1;
+    transition: 0.5s;
+}
+.game-over-title {
+    font-weight: 600;
+    font-size: 300%;
+}
+.game-over-subtitle {
+    background: var(--color-background-fade);
+    width: calc(90% - 20px);
+    padding: 10px;
+    border-radius: 0.5em;
+}
+.game-over-elo {
+    background: var(--color-background-fade);
+    width: calc(90% - 20px);
+    padding: 10px;
+    border-radius: 0.5em;
+    margin-top: 10px;
+}
+.game-over-elo-hidden {
+    display: none;
+}
+.game-over-button {
+    background: var(--color-main);
+    color: var(--color-text-2);
+    padding: 3px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 2em;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.game-over-button:hover {
+    filter: brightness(0.5);
+}
+.game-over-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+.loading-bar {
+    width: 90%;
+    max-width: 500px;
+    border-radius: 2em;
+    height: 10px;
+    overflow: hidden;
+    box-shadow: 0px 0px 5px #0000004f;
+    background: #00000036;
+    margin-top: 10px;
+    transition: 0.2s;
+}
+.loading-bar-background {
+    background: var(--color-main);
+    transition: 3s;
+    height: 100%;
+    width: 0;
+}
+.loading-bar-full {
+    width: 100%;
+}
+.loading-bar-hidden {
+    opacity: 0;
+}
+.skip-move {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    width: calc(100% - 20px);
+    height: 30%;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    background: #000000b2;
+    padding-left: 10px;
+    padding-right: 10px;
+    align-items: center;
+    transition: 0.2s;
+}
+.skip-move-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+.skip-move-title {
+    font-weight: 500;
+}
+.skip-move-subtitle {
+    font-weight: 300;
+    font-size: 80%;
+    color: var(--color-text);
+    filter: brightness(0.8);
+}
+.skip-move-button {
+    width: max-content;
+    padding: 2px;
+    padding-left: 12px;
+    padding-right: 12px;
+    background: var(--color-main);
+    border-radius: 2em;
+    color: var(--color-text-2);
+    cursor: pointer;
+    transition: 0.2s;
+}
+.skip-move-button:hover {
+    filter: brightness(0.5);
+}
+.game-card-blocks-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+.player-card-blocks-hidden {
+    display: none;
+}
+.player-card-blocks-alt .block, .enemy-card-blocks-alt .block, .extra-card-blocks-alt .block {
+    border-color: #7391ac33;
+} 
+@media screen and (min-width: 600px) {
+    .main {
+        flex-flow: row;
+    }
+    .game-controls {
+        max-width: 500px;
+    }
+    #container {
+        height: 100%;
+        max-width: unset;
+    }
+}
+@media screen and (min-width: 750px) {
+    .toast {
+        margin-top: 12px;
+        font-size: 115%;
+    }
+}
